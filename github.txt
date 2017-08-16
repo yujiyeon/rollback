@@ -1,0 +1,112 @@
+========================create repository============================================
+$.ajax({ 
+    url: 'https://api.github.com/user/repos',
+    type: 'POST',
+    beforeSend: function(xhr) { 
+        xhr.setRequestHeader("Authorization", "token TOKEN-FROM-PREVIOUS-CALL"); 
+    },
+    data: '{"name": "repo test","description":"repo create from ajax test","homepage": "https://sample.com","auto_init":true}'
+}).done(function(response) {
+    console.log(response);
+});
+========================Add collaborator to repository===============================
+$.ajax({ 
+    url: 'https://api.github.com/repos/yujiyeon/repo-test/collaborators/jinwoo367',
+    type: 'PUT',
+    
+     beforeSend: function(xhr) { 
+        xhr.setRequestHeader("Authorization",  "Basic " + btoa("yujiyeon:dbwldus26"));
+        xhr.setRequestHeader("Accept", "application/vnd.github.swamp-thing-preview+json"); 
+    }  , 
+    //dataType: 'jsonp',
+    data: {}///*,"affiliation":"all"*/
+}).done(function(response) {
+    console.log(response);
+}); 
+
+==================update file======================================================
+var filename = "secondfile.txt";
+var filemessage = "uploading a file";
+var filecontent = "The data of the file."
+var basecontent = btoa(filecontent);
+//var apiurl = contents_url.replace('{+path}',filename);
+var filedata = '{"message":"'+filemessage+'","content":"'+basecontent+'"}';
+$.ajax({ 
+    url: 'https://api.github.com/repos/yujiyeon/repo-test/contents/secondfile.txt',
+    type: 'PUT',
+    
+     beforeSend: function(xhr) { 
+        xhr.setRequestHeader("Authorization",  "Basic " + btoa("jinwoo367:wkdwlsdn367"));
+        //xhr.setRequestHeader("Accept", "application/vnd.github.swamp-thing-preview+json"); 
+    }  , 
+    //dataType: 'jsonp',
+    data: filedata///*,"affiliation":"all"*/
+}).done(function(response) {
+    console.log(response);
+}); 
+===================create branch====================================================
+-------------------get sha(pre-order)-----------------------------------------------
+$.ajax({ 
+    url: 'https://api.github.com/repos/yujiyeon/repo-test3/git/refs',
+    //dataType: 'jsonp',
+    type: 'GET',
+     beforeSend: function(xhr) { 
+        xhr.setRequestHeader("Authorization",  "Basic " + btoa("yujiyeon:dbwldus26"));
+        //xhr.setRequestHeader("Accept", "application/vnd.github.swamp-thing-preview+json"); 
+        //xhr.setRequestHeader("Content-Type","application/json");
+        //xhr.setRequestHeader("Accept", "application/vnd.github.swamp-thing-preview+json"); 
+    } //,
+     //data: JSON.stringify({ "ref":"master"}), ///*,"affiliation":"all"
+}).done(function(response) {
+    console.log(response);
+});
+-------------------------------------------------------------------------------------
+$.ajax({ 
+    url: 'https://api.github.com/repos/yujiyeon/repo-test/git/refs',
+    //dataType: 'jsonp',
+    type: 'POST',
+     beforeSend: function(xhr) { 
+        xhr.setRequestHeader("Authorization",  "Basic " + btoa("yujiyeon:dbwldus26"));
+        //xhr.setRequestHeader("Accept", "application/vnd.github.swamp-thing-preview+json"); 
+        //xhr.setRequestHeader("Content-Type","application/json");
+        //xhr.setRequestHeader("Accept", "application/vnd.github.swamp-thing-preview+json"); 
+    } ,
+     data: JSON.stringify({ "ref":"refs/heads/featureC","sha":"a379f3db110b13cfce062693e37735f7a038130e" }), ///*,"affiliation":"all"*/
+}).done(function(response) {
+    console.log(response);
+}); 
+
+=================upload file through branch=========================================
+var filename = "thirdfile.txt";
+var filemessage = "uploading a file";
+var filecontent = "The data of the file."
+var basecontent = btoa(filecontent);
+//var apiurl = contents_url.replace('{+path}',filename);
+var filedata = '{"message":"'+filemessage+'","content":"'+basecontent+'","branch":"featureC"}';
+$.ajax({ 
+    url: 'https://api.github.com/repos/yujiyeon/repo-test/contents/thirdfile.txt',
+    type: 'PUT',
+    
+     beforeSend: function(xhr) { 
+        xhr.setRequestHeader("Authorization",  "Basic " + btoa("yujiyeon:dbwldus26"));
+        //xhr.setRequestHeader("Accept", "application/vnd.github.swamp-thing-preview+json"); 
+    }  , 
+    //dataType: 'jsonp',
+    data: filedata///*,"affiliation":"all"*/
+}).done(function(response) {
+    console.log(response);
+}); 
+=======================merge repository===============================================
+$.ajax({ 
+    url: 'https://api.github.com/repos/yujiyeon/repo-test/merges',
+    type: 'POST',
+    
+     beforeSend: function(xhr) { 
+        xhr.setRequestHeader("Authorization",  "Basic " + btoa("yujiyeon:dbwldus26"));
+        //xhr.setRequestHeader("Accept", "application/vnd.github.swamp-thing-preview+json"); 
+    }  , 
+    //dataType: 'jsonp',
+    data: JSON.stringify({ "base":"master","head":"featureB","commit_message":"featureB upload" })///*,"affiliation":"all"*/
+}).done(function(response) {
+    console.log(response);
+}); 

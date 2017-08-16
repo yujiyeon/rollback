@@ -1,0 +1,51 @@
+<html>
+<head>
+<script src="https://unpkg.com/vue"></script>
+</head>
+<body>
+<div id="todo-list">
+  <input id="todoText" placeholder="Input TODO"/>
+  <button @click="add" >Add</button>
+  <button >Delete all</button>
+
+  
+   <div id="items">
+    <ul>
+  	<li v-for="(key,item) in items">
+  		{{ item }}
+  		<button @click="deletedd(key)" >Delete</button>
+  	</li>
+  </ul>
+    
+  </div>
+</div>
+
+<script type="text/javascript">
+	var app = new Vue({
+    el: '#todo-list',
+    data: {
+       items: [],
+       todoText: ''
+    },
+    methods: {
+       add: function(){
+       	var txt=document.getElementById("todoText").value;
+       	//alert(txt);
+       		//this.$set('todo-list.items', txt);
+          	this.items.push(txt);
+          	//console.log(this.items[0]);
+          	txt = '';
+          },
+       deletedd: function(ev){ 
+       		//console.log(this.items); 
+       		//alert(ev);
+          	this.items.splice(ev,1);
+          }
+      
+    }
+  });
+
+
+</script>
+</body>
+</html>
